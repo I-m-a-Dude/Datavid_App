@@ -107,6 +107,12 @@ backend/
 uvicorn main:app --reload
 ```
 
+### To populate the database please run before launching the web server
+
+```bash
+python seed_data.py
+```
+
 The API will be available at:
 - Base URL: `http://127.0.0.1:8000`
 - Interactive docs: `http://127.0.0.1:8000/docs`
