@@ -1,0 +1,89 @@
+# Test for endpoints
+# Make sure the server is running or else it will fail.....
+
+### Root endpoint
+GET http://127.0.0.1:8000/
+Accept: application/json
+
+### Create a new member
+POST http://127.0.0.1:8000/members
+Content-Type: application/json
+
+{
+  "first_name": "John",
+  "last_name": "Doe",
+  "birth_date": "1990-05-15",
+  "country": "United States",
+  "city": "Los Angeles"
+}
+
+### Create another member (will fail - underage)
+POST http://127.0.0.1:8000/members
+Content-Type: application/json
+
+{
+  "first_name": "Young",
+  "last_name": "Person",
+  "birth_date": "2010-01-01",
+  "country": "United States",
+  "city": "New York"
+}
+
+### Get all members
+GET http://127.0.0.1:8000/members
+Accept: application/json
+
+### Get specific member by ID
+GET http://127.0.0.1:8000/members/1
+Accept: application/json
+
+### Update a member
+PUT http://127.0.0.1:8000/members/1
+Content-Type: application/json
+
+{
+  "city": "San Francisco"
+}
+
+### Get upcoming birthdays (sorted)
+GET http://127.0.0.1:8000/members/birthdays/upcoming
+Accept: application/json
+
+### Get birthdays in next 30 days
+GET http://127.0.0.1:8000/members/birthdays/next-30-days
+Accept: application/json
+
+### Generate AI birthday message (friendly, English)
+POST http://127.0.0.1:8000/ai/birthday-message
+Content-Type: application/json
+
+{
+  "member_id": 1,
+  "tone": "friendly",
+  "localize_language": false
+}
+
+### Generate AI birthday message (formal, localized)
+POST http://127.0.0.1:8000/ai/birthday-message
+Content-Type: application/json
+
+{
+  "member_id": 3,
+  "tone": "formal",
+  "localize_language": true
+}
+
+### Delete a member
+DELETE http://127.0.0.1:8000/members/1
+
+### Try to create duplicate member (should fail)
+POST http://127.0.0.1:8000/members
+Content-Type: application/json
+
+{
+  "first_name": "Alice",
+  "last_name": "Johnson",
+  "birth_date": "1990-01-01",
+  "country": "United States",
+  "city": "New York"
+}
